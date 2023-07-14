@@ -8,7 +8,6 @@ import LoginBg from "../assets/images/loginbg.jpg";
 import Logo from "../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
 import {
   getAuth,
   signInWithPopup,
@@ -19,6 +18,7 @@ import {
 import { app } from "../config/firebase.config";
 import { validateJWTToken } from "../api";
 import { setUserDetails } from "../context/actions/userAction";
+import { alertInfo, alertWarning } from "../context/actions/alertActions";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -33,6 +33,7 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user);
+  const alert = useSelector((state) => state.alert);
 
   useEffect(() => {
     if (user) {
@@ -58,7 +59,7 @@ const Login = () => {
 
   const signUpWithEmail = async () => {
     if (email === "" || password === "" || confirmPassword === "") {
-      // alert message
+      dispatch(alertInfo("Required fields should not be empty!"));
     } else if (password === confirmPassword) {
       setEmail("");
       setPassword("");
@@ -78,13 +79,13 @@ const Login = () => {
         }
       );
     } else {
-      // alert message
+      dispatch(alertWarning("Password doesn't match"));
     }
   };
 
   const signInWithEmail = async () => {
     if (email === "" || password === "") {
-      // alert message
+      dispatch(alertWarning("Required fields should not be empty!"));
     } else {
       setEmail("");
       setPassword("");
