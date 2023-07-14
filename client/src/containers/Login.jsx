@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LoginInput from "../components/LoginInput";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -7,6 +7,7 @@ import { buttonClick } from "../animations";
 import LoginBg from "../assets/images/loginbg.jpg";
 import Logo from "../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   getAuth,
@@ -17,16 +18,28 @@ import {
 } from "firebase/auth";
 import { app } from "../config/firebase.config";
 import { validateJWTToken } from "../api";
+import { setUserDetails } from "../context/actions/userAction";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [isSignUp, setIsSignUp] = useState(false);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const naviagte = useNavigate();
 
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (user) {
+      navigate("/", { replace: true });
+    }
+    //eslint-disable-next-line
+  }, [user]);
 
   const signinWithGoogle = async () => {
     await signInWithPopup(firebaseAuth, provider).then((userCred) => {
@@ -34,9 +47,9 @@ const Login = () => {
         if (cred) {
           cred.getIdToken().then((token) => {
             validateJWTToken(token).then((data) => {
-              console.log(data);
+              dispatch(setUserDetails(data));
             });
-            naviagte("/", { replace: true });
+            navigate("/", { replace: true });
           });
         }
       });
@@ -56,9 +69,9 @@ const Login = () => {
             if (cred) {
               cred.getIdToken().then((token) => {
                 validateJWTToken(token).then((data) => {
-                  console.log(data);
+                  dispatch(setUserDetails(data));
                 });
-                naviagte("/", { replace: true });
+                navigate("/", { replace: true });
               });
             }
           });
@@ -81,9 +94,9 @@ const Login = () => {
             if (cred) {
               cred.getIdToken().then((token) => {
                 validateJWTToken(token).then((data) => {
-                  console.log(data);
+                  dispatch(setUserDetails(data));
                 });
-                naviagte("/", { replace: true });
+                navigate("/", { replace: true });
               });
             }
           });
