@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import Logo from "../assets/images/logo.png";
+import Logo from "../assets/images/logo1.png";
 import { isActiveStyles, isNotActiveStyles } from "../utils/style";
 import { buttonClick, slideTop } from "../animations";
 import { motion } from "framer-motion";
-import { MdLogout, MdShoppingCart } from "react-icons/md";
+import { MdLogout, MdShoppingBasket } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from "../assets/images/avatar.png";
 import { getAuth } from "firebase/auth";
@@ -36,12 +36,13 @@ const Header = () => {
       </NavLink>
 
       <nav className='flex items-center justify-center gap-8'>
-        <ul className='hidden md:flex items-center justify-center gap-12'>
+        <ul className='hidden md:flex items-center justify-center gap-8'>
           <NavLink
             className={({ isActive }) =>
               isActive ? isActiveStyles : isNotActiveStyles
             }
             to={"/"}
+            onMouseEnter={() => setIsMenu(false)}
           >
             Home
           </NavLink>
@@ -50,6 +51,7 @@ const Header = () => {
               isActive ? isActiveStyles : isNotActiveStyles
             }
             to={"/menu"}
+            onMouseEnter={() => setIsMenu(false)}
           >
             Menu
           </NavLink>
@@ -58,6 +60,7 @@ const Header = () => {
               isActive ? isActiveStyles : isNotActiveStyles
             }
             to={"/services"}
+            onMouseEnter={() => setIsMenu(false)}
           >
             Services
           </NavLink>
@@ -66,13 +69,18 @@ const Header = () => {
               isActive ? isActiveStyles : isNotActiveStyles
             }
             to={"/aboutus"}
+            onMouseEnter={() => setIsMenu(false)}
           >
             AboutUs
           </NavLink>
         </ul>
 
-        <motion.div {...buttonClick} className='relative cursor-pointer'>
-          <MdShoppingCart className='text-3xl text-textColor' />
+        <motion.div
+          {...buttonClick}
+          className='relative cursor-pointer'
+          onMouseEnter={() => setIsMenu(false)}
+        >
+          <MdShoppingBasket className='text-3xl text-textColor' />
           <div className='w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center absolute -top-4 -right-2'>
             <p className='text-primary text-base font-semibold'>2</p>
           </div>
@@ -140,7 +148,7 @@ const Header = () => {
             <NavLink to={"/login"}>
               <motion.button
                 {...buttonClick}
-                className='px-4 py-2 rounded-md shadow-md bg-cardOverlay border border-blue-300 cursor-pointer'
+                className='px-4 py-2 rounded-md shadow-md bg-cardOverlay border border-blue-300 hover:bg-blue-500 hover:text-white cursor-pointer'
               >
                 Login
               </motion.button>

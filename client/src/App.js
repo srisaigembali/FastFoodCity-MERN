@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { Login, Main } from "./containers";
+import { Dashboard, Login, Main } from "./containers";
 import { getAuth } from "firebase/auth";
 import { app } from "./config/firebase.config";
 import { validateJWTToken } from "./api";
@@ -31,7 +31,7 @@ const App = () => {
     });
     setInterval(() => {
       setIsLoading(false);
-    }, 3000);
+    }, 1500);
     // eslint-disable-next-line
   }, []);
 
@@ -48,6 +48,7 @@ const App = () => {
       <Routes>
         <Route path='/*' element={<Main />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/dashboard/*' element={<Dashboard />} />
       </Routes>
       {alert?.type && <Alert type={alert?.type} message={alert?.message} />}
     </div>
