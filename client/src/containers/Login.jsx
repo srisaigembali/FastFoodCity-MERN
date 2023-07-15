@@ -33,7 +33,7 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user);
-  const alert = useSelector((state) => state.alert);
+  // const alert = useSelector((state) => state.alert);
 
   useEffect(() => {
     if (user) {

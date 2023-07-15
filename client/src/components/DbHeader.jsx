@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { BsFillBellFill, BsToggles2 } from "react-icons/bs";
 import { MdLogout, MdSearch } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,12 +31,14 @@ const DbHeader = () => {
       <p className='text-2xl text-headingColor'>
         Welcome to City
         {user?.name && (
-          <span className='block text-base text-gray-700'>{`Hello ${user?.name} :)`}</span>
+          <span className='block text-base text-gray-700'>
+            Hello {user?.name} :)
+          </span>
         )}
       </p>
 
-      <div className='flex items-center justify-center gap-4'>
-        <div className='flex items-center justify-center gap-3 px-4 py-2 bg-cardOverlay backdrop-blur-md rounded-md shadow-md'>
+      <div className=' flex items-center justify-center gap-4 ms-[700px]'>
+        <div className=' flex items-center justify-center gap-3 px-4 py-2 bg-cardOverlay backdrop-blur-md rounded-md shadow-md'>
           <MdSearch className='text-gray-600 text-2xl' />
           <input
             type='text'
